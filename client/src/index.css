@@ -1,0 +1,343 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 100%);
+  --muted: hsl(210, 40%, 12%);
+  --muted-foreground: hsl(215, 20%, 65%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(0, 0%, 100%);
+  --card: hsl(0, 0%, 0%);
+  --card-foreground: hsl(0, 0%, 100%);
+  --border: hsl(210, 40%, 12%);
+  --input: hsl(210, 40%, 12%);
+  --primary: hsl(198, 88%, 48%);
+  --primary-foreground: hsl(0, 0%, 0%);
+  --secondary: hsl(210, 40%, 15%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(210, 40%, 15%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(198, 88%, 48%);
+  --radius: 0.5rem;
+  --rain-blue: hsl(198, 88%, 48%);
+  --rain-dark: hsl(0, 0%, 0%);
+  --rain-surface: hsl(210, 40%, 12%);
+  --rain-glow: hsl(199, 89%, 74%);
+  --rain-accent: hsl(186, 85%, 47%);
+}
+
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 100%);
+  --muted: hsl(210, 40%, 12%);
+  --muted-foreground: hsl(215, 20%, 65%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(0, 0%, 100%);
+  --card: hsl(0, 0%, 0%);
+  --card-foreground: hsl(0, 0%, 100%);
+  --border: hsl(210, 40%, 12%);
+  --input: hsl(210, 40%, 12%);
+  --primary: hsl(198, 88%, 48%);
+  --primary-foreground: hsl(0, 0%, 0%);
+  --secondary: hsl(210, 40%, 15%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(210, 40%, 15%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(198, 88%, 48%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@keyframes rain {
+  0% { transform: translateY(-100vh) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh) translateX(-20px); opacity: 0; }
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 20px rgba(0, 255, 150, 0.8), 0 0 30px rgba(0, 200, 255, 0.6), 0 0 40px rgba(150, 0, 255, 0.4); }
+  to { text-shadow: 0 0 30px rgba(50, 255, 200, 0.9), 0 0 40px rgba(100, 150, 255, 0.7), 0 0 50px rgba(200, 50, 255, 0.5); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    text-shadow: 0 0 20px rgba(0, 255, 150, 0.8), 0 0 30px rgba(0, 200, 255, 0.6), 0 0 40px rgba(150, 0, 255, 0.4);
+    transform: scale(1);
+  }
+  50% { 
+    text-shadow: 0 0 30px rgba(50, 255, 200, 0.9), 0 0 40px rgba(100, 150, 255, 0.7), 0 0 50px rgba(200, 50, 255, 0.5);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px hsl(var(--rain-glow) / 0.5); }
+  50% { box-shadow: 0 0 40px hsl(var(--rain-glow) / 0.8); }
+}
+
+.rain-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 50px;
+  background: linear-gradient(transparent, hsl(var(--rain-glow)), transparent);
+  animation: rain 2s linear infinite;
+}
+
+.glass-card {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(15px);
+  border: 1px solid hsl(var(--rain-glow) / 0.4);
+  box-shadow: 0 8px 32px rgba(0, 255, 150, 0.15), 0 0 0 1px rgba(0, 255, 150, 0.2);
+}
+
+.glow-text {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.glow-button {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.code-editor {
+  background: #1E1E1E;
+  border: 1px solid #323233;
+}
+
+.line-numbers {
+  background: #252526;
+  border-right: 1px solid #323233;
+  color: #858585;
+  user-select: none;
+}
+
+.syntax-highlight .keyword { color: #569CD6; }
+.syntax-highlight .string { color: #CE9178; }
+.syntax-highlight .function { color: #DCDCAA; }
+.syntax-highlight .comment { color: #6A9955; }
+
+.copy-success {
+  background: #16A34A !important;
+  transform: scale(1.05);
+}
+
+.floating-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out 0.5s both;
+}
+
+.animate-slide-up {
+  animation: slide-up 1s ease-out 1s both;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Glowing outline utilities */
+.glow-outline-blue {
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.glow-outline-green {
+  box-shadow: 0 0 0 1px rgba(0, 255, 150, 0.5), 0 0 20px rgba(0, 255, 150, 0.3);
+}
+
+.glow-outline-red {
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.glow-outline-purple {
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.5), 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+/* Enhanced button glow effects */
+.btn-glow-primary {
+  box-shadow: 0 0 0 1px rgba(0, 255, 150, 0.6), 0 4px 20px rgba(0, 255, 150, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-glow-primary:hover {
+  box-shadow: 0 0 0 2px rgba(0, 255, 150, 0.8), 0 6px 30px rgba(0, 255, 150, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(0, 255, 150, 0.8), rgba(0, 200, 255, 0.6));
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(0, 255, 150, 1), rgba(0, 200, 255, 0.8));
+  box-shadow: 0 0 10px rgba(0, 255, 150, 0.5);
+}
+
+/* Firefox scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 150, 0.8) rgba(0, 0, 0, 0.2);
+}
+
+/* More animations */
+@keyframes bounce-in {
+  0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+  50% { transform: scale(1.05) rotate(5deg); }
+  70% { transform: scale(0.9) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes zoom-in {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.8s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.8s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out;
+}
+
+.animate-zoom-in {
+  animation: zoom-in 0.6s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+/* Enhanced glow effects for different colors */
+.glow-outline-blue:hover {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.8), 0 6px 30px rgba(59, 130, 246, 0.5);
+}
+
+.glow-outline-red:hover {
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.8), 0 6px 30px rgba(239, 68, 68, 0.5);
+}
+
+/* Scroll-triggered animations */
+@keyframes fade-up {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes fade-in-scale {
+  from { 
+    opacity: 0; 
+    transform: scale(0.9); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+.fade-in-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.fade-in-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scale-in-on-scroll {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.8s ease-out;
+}
+
+.scale-in-on-scroll.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (max-width: 768px) {
+  .rain-drop {
+    height: 30px;
+  }
+}
